@@ -13,7 +13,7 @@ A chatbot developed using AWS Lex and Lambda for interacting with IPL 2019 data.
 - **Tools**: Git, VSCode
 
 ## Setup Instructions
-1. Clone the repo: `git clone https://github.com/yourusername/ipl-chatbot.git`
+1. Clone the repo: `git clone https://github.com/its-prithiv/IPL-ChatBot.git`
 2. Navigate to the project directory.
 3. Follow the [AWS Lex documentation](https://docs.aws.amazon.com/lex/latest/dg/what-is.html) to set up intents.
 
