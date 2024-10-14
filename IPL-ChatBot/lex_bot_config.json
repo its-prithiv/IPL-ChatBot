@@ -1,0 +1,207 @@
+# Prithiv JSON Structure for Lex Bot Configuration
+
+{
+  "botName": "IPLChatBot",
+  "locale": "en-IN",
+  "childDirected": false,
+  "intents": [
+    {
+      "name": "TossDetailsIntent",
+      "description": "Get details about the toss of a specific match.",
+      "sampleUtterances": [
+        "What is the toss result for {teamOne} vs {teamTwo} on {date}?",
+        "Who won the toss in the match between {teamOne} and {teamTwo} on {date}?",
+        "Tell me the toss details for {teamOne} and {teamTwo} on {date}."
+      ],
+      "slots": [
+        {
+          "name": "teamOne",
+          "slotType": "AMAZON.IplTeams",
+          "slotConstraint": "Required",
+          "confirmationPrompt": {
+            "messages": [
+              {
+                "content": "Did you mean {teamOne}?",
+                "contentType": "PlainText"
+              }
+            ],
+            "maxAttempts": 2
+          },
+          "elicitResponse": {
+            "messages": [
+              {
+                "content": "Please provide the first team name.",
+                "contentType": "PlainText"
+              }
+            ]
+          }
+        },
+        {
+          "name": "teamTwo",
+          "slotType": "AMAZON.IplTeams",
+          "slotConstraint": "Required",
+          "confirmationPrompt": {
+            "messages": [
+              {
+                "content": "Did you mean {teamTwo}?",
+                "contentType": "PlainText"
+              }
+            ],
+            "maxAttempts": 2
+          },
+          "elicitResponse": {
+            "messages": [
+              {
+                "content": "Please provide the second team name.",
+                "contentType": "PlainText"
+              }
+            ]
+          }
+        },
+        {
+          "name": "date",
+          "slotType": "AMAZON.DATE",
+          "slotConstraint": "Required",
+          "confirmationPrompt": {
+            "messages": [
+              {
+                "content": "Did you mean {date}?",
+                "contentType": "PlainText"
+              }
+            ],
+            "maxAttempts": 2
+          },
+          "elicitResponse": {
+            "messages": [
+              {
+                "content": "Please provide the date of the match.",
+                "contentType": "PlainText"
+              }
+            ]
+          }
+        }
+      ],
+      "fulfillmentActivity": {
+        "type": "CodeHook",
+        "codeHook": {
+          "uri": "arn:aws:lambda:ap-southeast-2:711387094832:function:IPLChatBot",
+          "messageVersion": "1.0"
+        }
+      }
+    },
+    {
+      "name": "PlayerOfTheMatchIntent",
+      "description": "Get details about the player of the match.",
+      "sampleUtterances": [
+        "Who was the player of the match for {teamOne} vs {teamTwo} on {date}?",
+        "Tell me the player of the match in the game between {teamOne} and {teamTwo} on {date}."
+      ],
+      "slots": [
+        {
+          "name": "teamOne",
+          "slotType": "AMAZON.IplTeams",
+          "slotConstraint": "Required"
+        },
+        {
+          "name": "teamTwo",
+          "slotType": "AMAZON.IplTeams",
+          "slotConstraint": "Required"
+        },
+        {
+          "name": "date",
+          "slotType": "AMAZON.DATE",
+          "slotConstraint": "Required"
+        }
+      ],
+      "fulfillmentActivity": {
+        "type": "CodeHook",
+        "codeHook": {
+          "uri": "arn:aws:lambda:ap-southeast-2:711387094832:function:IPLChatBot",
+          "messageVersion": "1.0"
+        }
+      }
+    },
+    {
+      "name": "VenueDetailsIntent",
+      "description": "Get details about the venue of a specific match.",
+      "sampleUtterances": [
+        "Where was the match played between {teamOne} and {teamTwo} on {date}?",
+        "Tell me the venue for the match on {date}."
+      ],
+      "slots": [
+        {
+          "name": "teamOne",
+          "slotType": "AMAZON.IplTeams",
+          "slotConstraint": "Required"
+        },
+        {
+          "name": "teamTwo",
+          "slotType": "AMAZON.IplTeams",
+          "slotConstraint": "Required"
+        },
+        {
+          "name": "date",
+          "slotType": "AMAZON.DATE",
+          "slotConstraint": "Required"
+        }
+      ],
+      "fulfillmentActivity": {
+        "type": "CodeHook",
+        "codeHook": {
+          "uri": "arn:aws:lambda:ap-southeast-2:711387094832:function:IPLChatBot",
+          "messageVersion": "1.0"
+        }
+      }
+    },
+    {
+      "name": "MatchDetailsIntent",
+      "description": "Get the results of a specific match.",
+      "sampleUtterances": [
+        "What were the results of the match between {teamOne} and {teamTwo} on {date}?",
+        "Who won the match on {date}?"
+      ],
+      "slots": [
+        {
+          "name": "teamOne",
+          "slotType": "AMAZON.IplTeams",
+          "slotConstraint": "Required"
+        },
+        {
+          "name": "teamTwo",
+          "slotType": "AMAZON.IplTeams",
+          "slotConstraint": "Required"
+        },
+        {
+          "name": "date",
+          "slotType": "AMAZON.DATE",
+          "slotConstraint": "Required"
+        }
+      ],
+      "fulfillmentActivity": {
+        "type": "CodeHook",
+        "codeHook": {
+          "uri": "arn:aws:lambda:ap-southeast-2:711387094832:function:IPLChatBot",
+          "messageVersion": "1.0"
+        }
+      }
+    }
+  ],
+  "voiceId": "Raveena",
+  "clarificationPrompt": {
+    "messages": [
+      {
+        "content": "Sorry, I didn't understand that. Can you please repeat?",
+        "contentType": "PlainText"
+      }
+    ],
+    "maxAttempts": 2
+  },
+  "abortStatement": {
+    "messages": [
+      {
+        "content": "I'm sorry, but I can't help with that right now.",
+        "contentType": "PlainText"
+      }
+    ]
+  }
+}

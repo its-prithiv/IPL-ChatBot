@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL ChatBot</title>
+    
+    <!-- AWS SDK for JavaScript -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.283.1.min.js"></script>
+    
+    <script>
+        // Initialize AWS SDK Configuration
+        AWS.config.region = 'ap-southeast-2';  // Replace with your AWS region
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: 'ap-southeast-2:fe8bc0a9-ee79-4cc7-9759-f6e72a0f03dd' // Replace with your Cognito Identity Pool ID
+        });
+
+        // Create Lex Runtime Service Object
+        const lexRuntime = new AWS.LexRuntime();
+
+        // Send user input to Lex bot and display the response
+		function sendMessage() {
+		const inputText = document.getElementById("userInput").value;
+
+		if (inputText === '') {
+			alert('Please type a message!');
+			return;
+		}
+
+		// Display the user's message immediately
+		document.getElementById('chatbox').innerHTML += `<p><strong>You:</strong> ${inputText}</p>`;
+		
+		// Check if the input contains 'bye' or 'thank'
+		if (inputText.toLowerCase().includes('bye') || inputText.toLowerCase().includes('thank')) {
+			document.getElementById('chatbox').innerHTML += `<p><strong>Bot:</strong> Thank you for chatting with me! Have a great day!</p>`;
+			
+			// Clear the input field and stop further interaction
+			document.getElementById("userInput").value = '';
+			return;
+		}
+
+		// Lex parameters
+		const params = {
+			botAlias: '$LATEST',              // Lex bot alias/version
+			botName: 'IPLChatBot',           // Replace with your Lex bot name
+			inputText: inputText,             // User's message to the bot
+			userId: 'testUser',               // Unique user ID
+			sessionAttributes: {}             // Optional session attributes
+		};
+
+		// Post the text message to Lex
+		lexRuntime.postText(params, function(err, data) {
+			if (err) {
+				console.log(err, err.stack); // Log errors
+				document.getElementById('chatbox').innerHTML += `<p>Error: ${err.message}</p>`;
+			} else {
+				console.log(data);  // Log successful response
+				const botResponse = data.message;  // Get Lex response message
+				document.getElementById('chatbox').innerHTML += `<p><strong>Bot:</strong> ${botResponse}</p>`;
+			}
+
+			// Clear the input field after sending the message
+			document.getElementById("userInput").value = '';
+		});
+		}
+
+
+        // Add event listener for 'Enter' key press
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('userInput').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    sendMessage(); // Trigger sendMessage function on 'Enter' key press
+                }
+            });
+
+            // Display welcome message at the start
+            document.getElementById('chatbox').innerHTML = `<p><strong>Bot:</strong> Welcome! How can I assist you today?</p>`;
+        });
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: linear-gradient(135deg, #2196f3, #1e88e5);
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        #chatbox {
+            background-color: #fefefe;
+            height: 400px;
+            width: 80%;
+            margin: 0 auto;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+            overflow-y: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #f8f9fa, #e0e0e0);
+        }
+        #userInput {
+            width: 70%;
+            padding: 15px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            outline: none;
+            font-size: 16px;
+        }
+        button {
+            padding: 15px 25px;
+            background-color: #2196f3;
+            color: white;
+            border: 2px lighter white;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1e88e5;
+			border-color: #ffffff;
+        }
+        #inputContainer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        p {
+            margin: 10px 0;
+            font-size: 18px; /* Increase the font size */
+        }
+        p strong {
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>IPL ChatBot - Prithiv Kumar</h1>
+
+    <!-- Chatbox to display conversation -->
+    <div id="chatbox">
+        <p>Start chatting with the bot...</p>
+    </div>
+
+    <!-- Input and button to interact with the bot -->
+    <div id="inputContainer">
+        <input type="text" id="userInput" placeholder="Type your message here">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+</body>
+</html>

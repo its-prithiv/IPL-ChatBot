@@ -1,0 +1,24 @@
+# IPL Chatbot UI
+
+This repository contains a simple webpage UI to interact with the IPL ChatBot hosted on Amazon Lex.
+
+## Files
+- `index3.html` : The UI to interact with the chatbot.
+- `ipl_2019_dataset` : XLS Worksheet contains the actual data of IPL matches
+- `README3.md` : This setup guide.
+
+### Steps to Run Locally:
+1. Open `index3.html` in your browser.
+2. Interact with the chatbot by typing your questions related to IPL matches, toss, venue, player of the match, etc., and the bot will fetch the relevant data.
+3. You can ask questions like Who won the match, Who won the toss, In which venue the match happened, Who is the player of the match.
+4. You have to clearly give input of which 2 teams played the match and on which date the match happened to get the correct output.
+	
+### Sample Questions:
+1. Who won the match between Royal Challengers Bangalore and Chennai Super Kings on 2019-03-23?
+2. Who won the match on march 24 2019 ? -- (Sunrisers Hyderabad, Kolkata Knight Riders)
+3. In which venue the match between Delhi Capitals and Mumbai Indians happened? -- (2019-03-24)
+4. Who won the toss between Kings XI Punjab and Rajasthan Royals ? -- (March 25, 2019)
+5. Who is the player of the match in the game between Chennai Super Kings and Rajasthan Royals ? -- (31/03/19)
+
+
+
